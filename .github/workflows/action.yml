@@ -1,5 +1,8 @@
 name: terraform deploy
 on: push
+permissions: 
+ id-token: write
+ contents: read
 
 jobs:
   terraform-job:
