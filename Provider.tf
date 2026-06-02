@@ -5,8 +5,11 @@ terraform {
       version = "4.75.0"
     }
   }
-  backend "local" {
-    path = "terraform.tfstate"
+  backend "azurerm" {
+    resource_group_name  = "aks-rg"
+    storage_account_name = "githubstorage2026"
+    container_name       = "jitucontainer"
+    key                  = "terrafor.tfstate"
   }
 }
 provider "azurerm" {
