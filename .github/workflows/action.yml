@@ -1,37 +1,51 @@
 name: terraform deploy
-on: push
-permissions: 
- id-token: write
- contents: read
+
+on:
+  push:
+
+permissions:
+  id-token: write
+  contents: read
 
 jobs:
   terraform-job:
-   runs-on: 
-   - self-hosted
-   - Jitu-runner
-  
-   steps:
-     - name: Checkout
-       uses: actions/checkout@v6.0.2
-     
-     - name: Azure Login
-       uses: Azure/login@v3
-       with:
-        client-id: ${{ secrets.CLIENT }}
-        tenant-id: ${{ secrets.TENANT }}
-        subscription-id: ${{ secrets.SUBSCRIPTION }}
-     - name: Setup Terraform
-       uses: hashicorp/setup-terraform@v3
+    runs-on:
+      - self-hosted
+      - Jitu-runner
 
-     - name: Terraform Init
-       run: terraform init
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
 
-     - name: Terraform Validate
-       run: terraform validate
+      - name: Show Files
+        run: dir
 
-     - name: Terraform Plan
-       run: terraform plan
+      - name: Show Terraform Files
+        run: dir *.tf
 
-     - name: Terraform Apply
-       run: terraform apply -auto-approve
-       
+      - name: Show Main TF
+        run: type main.tf
+
+      - name: Azure Login
+        uses: Azure/login@v3
+        with:
+          client-id: ${{ secrets.CLIENT }}
+          tenant-id: ${{ secrets.TENANT }}
+          subscription-id: ${{ secrets.SUBSCRIPTION }}
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_wrapper: false
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Terraform Validate
+        run: terraform validate
+
+      - name: Terraform Plan
+        run: terraform plan
+
+      - name: Terraform Apply
+        run: terraform apply -auto-approve
