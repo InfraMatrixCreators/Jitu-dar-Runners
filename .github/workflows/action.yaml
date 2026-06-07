@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - 'feature/*'
+      - main
 
 permissions:
   id-token: write
@@ -30,8 +31,6 @@ jobs:
           tenant-id: ${{ secrets.TENANT }}
           subscription-id: ${{ secrets.SUBSCRIPTION }}
 
-      
-
       - name: Terraform Init
         run: terraform init
 
@@ -46,6 +45,8 @@ jobs:
     name: Terraform Apply
 
     needs: terraform-plan
+
+    if: github.ref == 'refs/heads/main'
 
     runs-on:
       - self-hosted
@@ -62,8 +63,6 @@ jobs:
           client-id: ${{ secrets.CLIENT }}
           tenant-id: ${{ secrets.TENANT }}
           subscription-id: ${{ secrets.SUBSCRIPTION }}
-
-     
 
       - name: Terraform Init
         run: terraform init
