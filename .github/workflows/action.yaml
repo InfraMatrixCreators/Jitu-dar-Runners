@@ -1,0 +1,35 @@
+name: terraform-deployment
+on: 
+  push:
+    branches: 
+      - 'feature/**'
+permissions: 
+  id-token: write
+  contents: read
+
+jobs:
+  terraform-job:
+    name: terraform predeployment
+    runs-on: 
+      - self-hosted
+      - Jitu-runner
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+      - name: Azure Login
+        uses: Azure/login@v3
+        with:
+          client-id: ${{ secrets.CLIENT }}
+          tenant-id: ${{ secrets.TENANT }}
+          subscription-id: ${{ secrets.SUBSCRIPTION }}
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+      - name: Terraform Init
+        run: terraform init
+      - name: Terraform Validate
+        run: terraform validate
+      - name: Terraform Plan
+        run: terraform plan
+      - name: Terraform Apply
+        run: terraform apply -auto-approve
+
