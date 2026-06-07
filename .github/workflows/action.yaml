@@ -2,7 +2,7 @@ name: terraform-deployment
 on: 
   push:
     branches: 
-      - 'feature/**'
+      - 'feature/*'
 permissions: 
   id-token: write
   contents: read
