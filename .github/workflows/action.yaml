@@ -22,8 +22,7 @@ jobs:
           client-id: ${{ secrets.CLIENT }}
           tenant-id: ${{ secrets.TENANT }}
           subscription-id: ${{ secrets.SUBSCRIPTION }}
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v3
+      
       - name: Terraform Init
         run: terraform init
       - name: Terraform Validate
