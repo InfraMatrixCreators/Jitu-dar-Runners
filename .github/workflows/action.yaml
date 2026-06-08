@@ -6,6 +6,10 @@ on:
       - 'feature/*'
       - main
 
+  pull_request:
+    branches:
+      - main
+
 permissions:
   id-token: write
   contents: read
@@ -46,7 +50,8 @@ jobs:
 
     needs: terraform-plan
 
-    if: github.ref == 'refs/heads/main'
+    # Apply only on push to main
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
 
     runs-on:
       - self-hosted
@@ -69,3 +74,4 @@ jobs:
 
       - name: Terraform Apply
         run: terraform apply -auto-approve
+
