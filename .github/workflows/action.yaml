@@ -23,6 +23,10 @@ jobs:
       - self-hosted
       - Jitu-runner
 
+    defaults:
+      run:
+        working-directory: Environments/UAT
+
     steps:
 
       - name: Checkout Code
@@ -42,7 +46,7 @@ jobs:
         run: terraform validate
 
       - name: Terraform Plan
-        run: terraform plan
+        run: terraform plan 
 
 
   terraform-apply:
@@ -50,12 +54,15 @@ jobs:
 
     needs: terraform-plan
 
-    # Apply only on push to main
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
 
     runs-on:
       - self-hosted
       - Jitu-runner
+
+    defaults:
+      run:
+        working-directory: Environments/UAT
 
     steps:
 
@@ -73,5 +80,5 @@ jobs:
         run: terraform init
 
       - name: Terraform Apply
-        run: terraform apply -auto-approve
+        run: terraform apply -auto-approve 
 
