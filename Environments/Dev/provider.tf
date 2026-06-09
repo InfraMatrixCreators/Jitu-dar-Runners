@@ -7,12 +7,12 @@ terraform {
   }
   backend "azurerm" {
     resource_group_name  = "aks-rg"
-    storage_account_name = "githubstorage2026"
+    storage_account_name = "githubstorage2027"
     container_name       = "jitucontainer"
     key                  = "terrafor.tfstate"
   }
 }
 provider "azurerm" {
   features {}
-  subscription_id = "f629b635-870e-43b8-9cb9-e63602746dd4"
+  subscription_id = "463b3526-cc09-4609-97e3-dbe5a21dffce"
 }
